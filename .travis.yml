@@ -15,7 +15,7 @@ before_script:
   - mix ecto.migrate
 
 script:
-  - mix coveralls.travis
+  - mix coveralls.travis --umbrella
 
 after_script:
   - bash <(curl -s https://codecov.io/bash)
