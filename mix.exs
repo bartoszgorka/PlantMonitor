@@ -1,4 +1,4 @@
-defmodule PlantMonitor.Mixfile do
+defmodule PlantMonitorUmbrella.Mixfile do
   use Mix.Project
 
   def project do

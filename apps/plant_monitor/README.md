@@ -1,0 +1,3 @@
+# PlantMonitor - Core
+
+**Elixir core**
