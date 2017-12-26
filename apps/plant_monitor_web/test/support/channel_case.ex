@@ -1,4 +1,4 @@
-defmodule PlantMonitorWebWeb.ChannelCase do
+defmodule PlantMonitorWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,7 +21,7 @@ defmodule PlantMonitorWebWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint PlantMonitorWebWeb.Endpoint
+      @endpoint PlantMonitorWeb.Endpoint
     end
   end
 

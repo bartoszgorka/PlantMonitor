@@ -34,17 +34,8 @@ defmodule PlantMonitor.User do
     |> encrypt_password()
   end
 
-  @doc """
-  Encrypt password from changes in `Ecto.Changeset` and put change to this changeset.
-
-  ## Parameters
-      Ecto.Changeset - with password or without
-
-  ## Returns
-      Ecto.Changeset
-  """
   @spec encrypt_password(map()) :: map()
-  def encrypt_password(%{changes: %{password: password}} = changeset), do: changeset |> put_change(:encrypted_password, Comeonin.Bcrypt.hashpwsalt(password))
-  def encrypt_password(changeset), do: changeset
+  defp encrypt_password(%{changes: %{password: password}} = changeset), do: changeset |> put_change(:encrypted_password, Comeonin.Bcrypt.hashpwsalt(password))
+  defp encrypt_password(changeset), do: changeset
 
 end

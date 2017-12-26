@@ -11,10 +11,10 @@ config :plant_monitor_web,
   ecto_repos: [PlantMonitor.Repo]
 
 # Configures the endpoint
-config :plant_monitor_web, PlantMonitorWebWeb.Endpoint,
+config :plant_monitor_web, PlantMonitorWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "RRUJ8t3lakAtmJJuLaV07iSZ6ZphS12Dg7q21xFd+t607LnVPmnfegKTe02OdneQ",
-  render_errors: [view: PlantMonitorWebWeb.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: PlantMonitorWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: PlantMonitorWeb.PubSub, adapter: Phoenix.PubSub.PG2]
 
 config :plant_monitor_web, :generators,

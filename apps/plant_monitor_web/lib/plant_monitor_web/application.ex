@@ -10,7 +10,7 @@ defmodule PlantMonitorWeb.Application do
     # Define workers and child supervisors to be supervised
     children = [
       # Start the endpoint when the application starts
-      supervisor(PlantMonitorWebWeb.Endpoint, []),
+      supervisor(PlantMonitorWeb.Endpoint, []),
       # Start your own worker by calling: PlantMonitorWeb.Worker.start_link(arg1, arg2, arg3)
       # worker(PlantMonitorWeb.Worker, [arg1, arg2, arg3]),
     ]
@@ -24,7 +24,7 @@ defmodule PlantMonitorWeb.Application do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    PlantMonitorWebWeb.Endpoint.config_change(changed, removed)
+    PlantMonitorWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

@@ -1,4 +1,4 @@
-defmodule PlantMonitorWebWeb.ConnCase do
+defmodule PlantMonitorWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -19,10 +19,10 @@ defmodule PlantMonitorWebWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      import PlantMonitorWebWeb.Router.Helpers
+      import PlantMonitorWeb.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint PlantMonitorWebWeb.Endpoint
+      @endpoint PlantMonitorWeb.Endpoint
     end
   end
 

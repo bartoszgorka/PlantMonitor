@@ -1,5 +1,5 @@
-defmodule PlantMonitorWebWeb.ErrorView do
-  use PlantMonitorWebWeb, :view
+defmodule PlantMonitorWeb.ErrorView do
+  use PlantMonitorWeb, :view
 
   def render("404.html", _assigns) do
     "Page not found"

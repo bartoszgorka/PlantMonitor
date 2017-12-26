@@ -1,4 +1,4 @@
-defmodule PlantMonitorWebWeb.ErrorHelpers do
+defmodule PlantMonitorWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -32,9 +32,9 @@ defmodule PlantMonitorWebWeb.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(PlantMonitorWebWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(PlantMonitorWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(PlantMonitorWebWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(PlantMonitorWeb.Gettext, "errors", msg, opts)
     end
   end
 end

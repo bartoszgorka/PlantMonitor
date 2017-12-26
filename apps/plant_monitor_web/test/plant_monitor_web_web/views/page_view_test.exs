@@ -1,3 +1,3 @@
-defmodule PlantMonitorWebWeb.PageViewTest do
-  use PlantMonitorWebWeb.ConnCase, async: true
+defmodule PlantMonitorWeb.PageViewTest do
+  use PlantMonitorWeb.ConnCase, async: true
 end

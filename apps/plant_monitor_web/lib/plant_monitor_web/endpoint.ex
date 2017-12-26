@@ -1,7 +1,7 @@
-defmodule PlantMonitorWebWeb.Endpoint do
+defmodule PlantMonitorWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :plant_monitor_web
 
-  socket "/socket", PlantMonitorWebWeb.UserSocket
+  socket "/socket", PlantMonitorWeb.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -38,7 +38,7 @@ defmodule PlantMonitorWebWeb.Endpoint do
     key: "_plant_monitor_web_key",
     signing_salt: "sctAoyaa"
 
-  plug PlantMonitorWebWeb.Router
+  plug PlantMonitorWeb.Router
 
   @doc """
   Callback invoked for dynamically configuring the endpoint.
