@@ -43,6 +43,9 @@ defmodule PlantMonitor.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:ecto, "~> 2.2.6"},
 
+      # Encrypt password
+      {:comeonin, "~> 4.0"},
+      
     ]
   end
 
