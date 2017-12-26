@@ -10,7 +10,7 @@ env:
   - MIX_ENV=test
 
 before_script:
-  - cp config/travis.exs config/test.exs
+  - cp apps/plant_monitor/config/travis.exs apps/plant_monitor/config/test.exs
   - mix ecto.create
   - mix ecto.migrate
 
