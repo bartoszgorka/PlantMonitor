@@ -1,4 +1,7 @@
 defmodule PlantMonitor.User do
+  @moduledoc """
+  User schema - access to Monitor service.
+  """
   use PlantMonitor.Schema
 
   schema "users" do
@@ -31,8 +34,17 @@ defmodule PlantMonitor.User do
     |> encrypt_password()
   end
 
-  def encrypt_password(changeset) do
-    changeset
-  end
+  @doc """
+  Encrypt password from changes in `Ecto.Changeset` and put change to this changeset.
+
+  ## Parameters
+      Ecto.Changeset - with password or without
+
+  ## Returns
+      Ecto.Changeset
+  """
+  @spec encrypt_password(map()) :: map()
+  def encrypt_password(%{changes: %{password: password}} = changeset), do: changeset |> put_change(:encrypted_password, Comeonin.Bcrypt.hashpwsalt(password))
+  def encrypt_password(changeset), do: changeset
 
 end

@@ -2,6 +2,8 @@ defmodule PlantMonitor.UserTest do
   use PlantMonitor.DataCase
   alias PlantMonitor.User
 
+  # CHANGESET
+
   test "[VALID][CHANGESET] New changeset with User" do
     parameters = %{
       email: "john@example.com",
