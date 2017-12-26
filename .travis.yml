@@ -11,3 +11,6 @@ env:
 
 script:
   - mix coveralls.travis
+
+after_script:
+  - bash <(curl -s https://codecov.io/bash)
