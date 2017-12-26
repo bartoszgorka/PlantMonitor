@@ -10,8 +10,9 @@ env:
   - MIX_ENV=test
 
 script:
-  - MIX_ENV=test mix ecto.create
-  - MIX_ENV=test mix ecto.migrate
+  - cp config/travis.exs config/test.exs
+  - mix ecto.create
+  - mix ecto.migrate
   - mix coveralls.travis
 
 after_script:
