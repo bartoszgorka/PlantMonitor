@@ -9,10 +9,12 @@ services:
 env:
   - MIX_ENV=test
 
-script:
+before_script:
   - cp config/travis.exs config/test.exs
   - mix ecto.create
   - mix ecto.migrate
+
+script:
   - mix coveralls.travis
 
 after_script:
