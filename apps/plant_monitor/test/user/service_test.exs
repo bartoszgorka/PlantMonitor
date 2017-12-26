@@ -4,9 +4,39 @@ defmodule PlantMonitor.UserServiceTest do
 
   # REGISTER
 
-  test "[VALID][REGISTER] Register new user"
+  test "[VALID][REGISTER] Register new user" do
+    parameters = %{
+      email: "john@example.com",
+      password: "Password"
+    }
 
-  test "[INVALID][REGISTER] Invalid parameters in Register"
+    result = UserService.register(parameters)
+
+    assert :ok == result
+  end
+
+  test "[INVALID][REGISTER] Duplicated email" do
+    user = insert(:user)
+    parameters = %{
+      email: user.email,
+      password: "Password"
+    }
+
+    result = UserService.register(parameters)
+
+    assert {:error, %Ecto.Changeset{}} = result
+  end
+
+  test "[INVALID][REGISTER] Invalid password" do
+    parameters = %{
+      email: "john@example.com",
+      password: "2SH"
+    }
+
+    result = UserService.register(parameters)
+
+    assert {:error, %Ecto.Changeset{}} = result
+  end
 
   # FETCH USER BY EMAIL
 
