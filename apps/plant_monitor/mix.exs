@@ -47,6 +47,9 @@ defmodule PlantMonitor.Mixfile do
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
 
+      # Tests
+      {:ex_machina, "~> 2.1", only: :test},
+      
     ]
   end
 
