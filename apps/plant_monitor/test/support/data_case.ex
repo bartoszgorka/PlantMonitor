@@ -22,6 +22,8 @@ defmodule PlantMonitor.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import PlantMonitor.DataCase
+
+      import PlantMonitor.Factory
     end
   end
 

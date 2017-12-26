@@ -10,8 +10,17 @@ defmodule PlantMonitor.UserServiceTest do
 
   # FETCH USER BY EMAIL
 
-  test "[VALID][FETCH_USER_BY_EMAIL] Find user"
+  test "[VALID][FETCH_USER_BY_EMAIL] Find user" do
+    user = insert(:user)
+    result = UserService.fetch_user_by_email(user.email)
 
-  test "[INVALID][FETCH_USER_BY_EMAIL] No user found"
+    assert user.id == result.id
+  end
+
+  test "[INVALID][FETCH_USER_BY_EMAIL] No user found" do
+    result = UserService.fetch_user_by_email("NOT EXISTS")
+
+    refute result
+  end
 
 end
