@@ -1,0 +1,9 @@
+{
+  "skip_files": [
+    "lib/plant_monitor_web.ex",
+    "lib/plant_monitor_web/application.ex",
+    "lib/plant_monitor_web/endpoint.ex",
+    "test/support/channel_case.ex",
+    "lib/plant_monitor_web/views/error_helpers.ex"
+  ]
+}

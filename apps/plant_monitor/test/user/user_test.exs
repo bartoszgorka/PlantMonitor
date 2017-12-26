@@ -28,6 +28,17 @@ defmodule PlantMonitor.UserTest do
     refute changeset.valid?
   end
 
+  test "[INVALID][CHANGESET] Missing password" do
+    parameters = %{
+      email: "john@example.com"
+    }
+    changeset =
+      %User{}
+      |> User.changeset(parameters)
+
+    refute changeset.valid?
+  end
+
   test "[INVALID][CHANGESET] Invalid email format" do
     params = %{
       email: "@",

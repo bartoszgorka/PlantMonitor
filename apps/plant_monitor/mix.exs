@@ -49,7 +49,7 @@ defmodule PlantMonitor.Mixfile do
 
       # Tests
       {:ex_machina, "~> 2.1", only: :test},
-      
+
     ]
   end
 
