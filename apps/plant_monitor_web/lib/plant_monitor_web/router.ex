@@ -1,5 +1,7 @@
 defmodule PlantMonitorWeb.Router do
   use PlantMonitorWeb, :router
+  use Plug.ErrorHandler
+  use Sentry.Plug
 
   pipeline :browser do
     plug :accepts, ["html"]

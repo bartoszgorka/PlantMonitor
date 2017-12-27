@@ -50,6 +50,9 @@ defmodule PlantMonitor.Mixfile do
       # Tests
       {:ex_machina, "~> 2.1", only: :test},
 
+      # Sentry 
+      {:sentry, "~> 6.0.4"},
+
     ]
   end
 

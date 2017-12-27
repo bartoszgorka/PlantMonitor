@@ -18,6 +18,7 @@ defmodule PlantMonitorWeb.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: PlantMonitorWeb.Supervisor]
+    :ok = :error_logger.add_report_handler(Sentry.Logger)
     Supervisor.start_link(children, opts)
   end
 
