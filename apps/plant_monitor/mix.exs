@@ -53,6 +53,10 @@ defmodule PlantMonitor.Mixfile do
       # Sentry
       {:sentry, "~> 6.0.4"},
 
+      # JWT Authorization
+      {:joken, "~> 1.5.0"},
+      {:rsa_ex, "~> 0.2.0"},
+
     ]
   end
 
