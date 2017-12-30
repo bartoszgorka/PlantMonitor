@@ -8,5 +8,6 @@ defmodule PlantMonitor.Factory do
 
   # OAuth
   use PlantMonitor.OAuth.AccessTokenFactory
+  use PlantMonitor.OAuth.RefreshTokenFactory
 
 end
