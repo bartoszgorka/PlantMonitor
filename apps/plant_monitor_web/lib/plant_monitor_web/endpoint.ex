@@ -38,6 +38,9 @@ defmodule PlantMonitorWeb.Endpoint do
     key: "_plant_monitor_web_key",
     signing_salt: "sctAoyaa"
 
+  # CORS plug
+  plug CORSPlug
+
   plug PlantMonitorWeb.Router
 
   @doc """
