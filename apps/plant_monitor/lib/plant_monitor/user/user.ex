@@ -34,7 +34,14 @@ defmodule PlantMonitor.User do
     |> encrypt_password()
   end
 
-  defp encrypt_password(%{changes: %{password: password}} = changeset), do: changeset |> put_change(:encrypted_password, Comeonin.Bcrypt.hashpwsalt(password))
+  defp encrypt_password(%{changes: %{password: password}} = changeset) do
+    encrypted =
+      password
+      |> Comeonin.Bcrypt.hashpwsalt()
+
+    changeset
+    |> put_change(:encrypted_password, encrypted)
+  end
   defp encrypt_password(changeset), do: changeset
 
 end
