@@ -4,5 +4,9 @@ defmodule PlantMonitor.Factory do
 
   # User
   use PlantMonitor.UserFactory
+  use PlantMonitor.ProfileFactory
+
+  # OAuth
+  use PlantMonitor.OAuth.AccessTokenFactory
 
 end
