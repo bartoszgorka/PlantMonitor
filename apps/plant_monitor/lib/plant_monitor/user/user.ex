@@ -9,6 +9,8 @@ defmodule PlantMonitor.User do
     field :encrypted_password, :string
     field :password, :string, virtual: true
 
+    field :permissions, {:array, :string}
+
     timestamps()
   end
 
