@@ -5,6 +5,10 @@ defmodule PlantMonitorWeb.ErrorView do
   use PlantMonitorWeb, :view
   alias PlantMonitorWeb.Structs.Error.ErrorResponse
 
+  @error_401_message "No permission to perform this action."
+  @error_403_message "Action Forbidden! You must authorize request."
+  @error_422_message "Invalid request parameters. Check our API docs and correct your query."
+
   @doc """
   Render error
   """
@@ -30,6 +34,43 @@ defmodule PlantMonitorWeb.ErrorView do
     %ErrorResponse{
       status: 404,
       message: "Not Found!",
+      fields: []
+    }
+  end
+
+  # RENDER OUR CUSTOM ERROR WITH MESSAGE AND STATUS
+
+  def render("error.json", %{status: status, message: message}) do
+    %ErrorResponse{
+      status: status,
+      message: message,
+      fields: []
+    }
+  end
+
+  # RENDER ERROR WITH DEFAULT MESSAGE FOR SELECTED STATUS
+
+  def render("error.json", %{status: status}) do
+    message =
+      case status do
+        401 -> @error_401_message
+        403 -> @error_403_message
+        422 -> @error_422_message
+      end
+
+    %ErrorResponse{
+      status: status,
+      message: message,
+      fields: []
+    }
+  end
+
+  # RENDER GLOBAL ERROR JSON
+
+  def render("error.json", _params) do
+    %ErrorResponse{
+      status: 422,
+      message: @error_422_message,
       fields: []
     }
   end
