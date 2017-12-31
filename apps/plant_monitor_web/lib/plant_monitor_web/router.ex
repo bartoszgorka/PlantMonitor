@@ -34,7 +34,7 @@ defmodule PlantMonitorWeb.Router do
   scope "/api", PlantMonitorWeb.API do
     pipe_through :api
 
-    post "/users", UserController, :create
+    post "/users", UserController, :register
     post "/login", SessionController, :login
   end
 
