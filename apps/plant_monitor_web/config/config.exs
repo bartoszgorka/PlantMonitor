@@ -28,7 +28,7 @@ config :logger, :console,
 # Sentry
 config :sentry,
   dsn: "${SENTRY_URL}",
-  included_environments: [:prod],
+  included_environments: ["production"],
   use_error_logger: true,
   enable_source_code_context: true,
   root_source_code_path: File.cwd!

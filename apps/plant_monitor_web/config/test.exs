@@ -8,3 +8,6 @@ config :plant_monitor_web, PlantMonitorWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# Sentry config
+config :sentry, environment_name: "test"
