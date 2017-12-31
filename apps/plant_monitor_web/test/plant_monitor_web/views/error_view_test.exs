@@ -1,6 +1,7 @@
 defmodule PlantMonitorWeb.ErrorViewTest do
   use PlantMonitorWeb.ConnCase
   alias PlantMonitorWeb.Structs.Error.ErrorResponse
+  alias PlantMonitorWeb.Structs.Error.ErrorField
   alias PlantMonitorWeb.ErrorView
   import Phoenix.View
 
@@ -109,6 +110,25 @@ defmodule PlantMonitorWeb.ErrorViewTest do
 
     result = render(ErrorView, "error.json", %{status: status, message: message})
 
+    assert expected == result
+  end
+
+  # RENDER ERROR.JSON WITH CHANGESET
+
+  test "[ERROR VIEW][ERROR.JSON] Changeset errors" do
+    changeset = %Ecto.Changeset{errors: [password: {"should be at least 6 character(s)", [validation: :required]}]}
+    expected = %ErrorResponse{
+      status: 422,
+      message: "Invalid request parameters. Check our API docs and correct your query.",
+      fields: [
+        %ErrorField{
+          key: "password",
+          message: "should be at least 6 character(s)"
+        }
+      ]
+    }
+
+    result = render(ErrorView, "error.json", changeset)
     assert expected == result
   end
 

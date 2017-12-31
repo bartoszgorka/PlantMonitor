@@ -4,6 +4,7 @@ defmodule PlantMonitorWeb.ErrorView do
   """
   use PlantMonitorWeb, :view
   alias PlantMonitorWeb.Structs.Error.ErrorResponse
+  alias PlantMonitorWeb.Structs.Error.ErrorField
 
   @error_401_message "No permission to perform this action."
   @error_403_message "Action Forbidden! You must authorize request."
@@ -35,6 +36,16 @@ defmodule PlantMonitorWeb.ErrorView do
       status: 404,
       message: "Not Found!",
       fields: []
+    }
+  end
+
+  # RENDER ERRORS IN CHANGESET
+
+  def render("error.json", %Ecto.Changeset{} = changeset) do
+    %ErrorResponse{
+      status: 422,
+      message: @error_422_message,
+      fields: errors_from_changeset(changeset)
     }
   end
 
@@ -80,6 +91,21 @@ defmodule PlantMonitorWeb.ErrorView do
   """
   def template_not_found(_template, assigns) do
     render "500.html", assigns
+  end
+
+  defp errors_from_changeset(changeset) do
+    Enum.map(changeset.errors, fn {key, detail} ->
+      %ErrorField{
+        key: to_string(key),
+        message: render_detail(detail)
+      }
+    end)
+  end
+
+  defp render_detail({message, values}) do
+    Enum.reduce(values, message, fn {k, v}, acc ->
+      String.replace(acc, "%{#{k}}", to_string(v))
+    end)
   end
 
 end
