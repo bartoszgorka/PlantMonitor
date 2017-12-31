@@ -1,14 +1,20 @@
 defmodule PlantMonitorWeb.API.SessionControllerTest do
   use PlantMonitorWeb.ConnCase
+  import PlantMonitor.UserFactory
 
   # LOGIN
 
   test "[SESSION_CONTROLLER][LOGIN] Login to PlantMonitor API" do
+    password = "Password"
+    user =
+      build(:user, %{password: password})
+      |> encrypt_password()
+      |> insert()
+
     parameters = %{
-      email: "john@example.com",
-      password: "Password"
+      email: user.email,
+      password: password
     }
-    :ok = PlantMonitor.UserService.register(parameters)
 
     result = post(build_conn(), "/api/login", parameters)
     assert result.status == 201

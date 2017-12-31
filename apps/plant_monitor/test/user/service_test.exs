@@ -1,6 +1,7 @@
 defmodule PlantMonitor.UserServiceTest do
   use PlantMonitor.DataCase
   alias PlantMonitor.UserService
+  import PlantMonitor.UserFactory
 
   # REGISTER
 
@@ -56,11 +57,16 @@ defmodule PlantMonitor.UserServiceTest do
   # LOGIN
 
   test "[LOGIN] Correct credentials" do
+    password = "Password"
+    user =
+      build(:user, %{password: password})
+      |> encrypt_password()
+      |> insert()
+
     parameters = %{
-      email: "john@example.com",
-      password: "Password"
+      email: user.email,
+      password: password
     }
-    :ok = UserService.register(parameters)
 
     result = UserService.login(parameters)
     assert {:ok, _token} = result
