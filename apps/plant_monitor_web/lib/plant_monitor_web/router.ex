@@ -15,10 +15,20 @@ defmodule PlantMonitorWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :require_access_token do
+    plug PlantMonitorWeb.Plugs.AssignAccessToken
+  end
+
   scope "/", PlantMonitorWeb do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
+
+  scope "/oauth", PlantMonitorWeb.OAuth do
+    pipe_through [:api, :require_access_token]
+
+    post "/token", AuthorizeController, :refresh_token
   end
 
   scope "/api", PlantMonitorWeb.API do
