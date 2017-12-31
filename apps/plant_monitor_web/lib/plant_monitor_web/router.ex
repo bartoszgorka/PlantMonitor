@@ -15,7 +15,7 @@ defmodule PlantMonitorWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :require_access_token do
+  pipeline :assign_access_token do
     plug PlantMonitorWeb.Plugs.AssignAccessToken
   end
 
@@ -26,7 +26,7 @@ defmodule PlantMonitorWeb.Router do
   end
 
   scope "/oauth", PlantMonitorWeb.OAuth do
-    pipe_through [:api, :require_access_token]
+    pipe_through [:api, :assign_access_token]
 
     post "/token", AuthorizeController, :refresh_token
   end
