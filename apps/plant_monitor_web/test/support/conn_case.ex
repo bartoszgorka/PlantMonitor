@@ -21,12 +21,20 @@ defmodule PlantMonitorWeb.ConnCase do
       use Phoenix.ConnTest
       import PlantMonitorWeb.Router.Helpers
 
+      # Factory
+      import PlantMonitor.Factory
+
       # The default endpoint for testing
       @endpoint PlantMonitorWeb.Endpoint
     end
   end
 
-  setup _tags do
+  setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(PlantMonitor.Repo)
+    unless tags[:async] do
+      Ecto.Adapters.SQL.Sandbox.mode(PlantMonitor.Repo, {:shared, self()})
+    end
+
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 
