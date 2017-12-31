@@ -33,7 +33,6 @@ defmodule PlantMonitor.OAuth.RefreshTokenService do
     end
   end
 
-  @spec random_key(n :: integer()) :: String.t()
   defp random_key(n \\ 20) do
     :crypto.strong_rand_bytes(n)
     |> Base.encode64(case: :lower, padding: true)

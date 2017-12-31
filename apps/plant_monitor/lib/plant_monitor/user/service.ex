@@ -57,15 +57,14 @@ defmodule PlantMonitor.UserService do
 
   ## Returns
       {:error, :invalid_credentials} -> when invalid user's credentials
-      {:ok, %{}} -> correct login
+      {:ok, %{access_token: String.t(), expires_in: integer(), permissions: list(), refresh_token: String.t()}} -> correct login
   """
-  @type authorize_response :: {:ok, %{access_token: String.t(), expires_in: integer(), permissions: list(), refresh_token: String.t()}}
-  @type login_response :: authorize_response | {:error, :invalid_credentials}
+  @type login_response :: {:ok, %{access_token: String.t(), expires_in: integer(), permissions: list(), refresh_token: String.t()}} | {:error, :invalid_credentials}
   @spec login(%{email: String.t(), password: String.t()}) :: login_response
   def login(%{email: email, password: password}) do
-    with %User{} = user <- fetch_user_by_email(email),
+    with %User{id: user_id, permissions: permissions} = user <- fetch_user_by_email(email),
          true <- validate_password(user, password),
-         {:ok, token} <- PlantMonitor.OAuth.authorize(user)
+         {:ok, token} <- PlantMonitor.OAuth.authorize(%{id: user_id, permissions: permissions})
     do
       {:ok, token}
     else

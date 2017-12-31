@@ -42,8 +42,8 @@ defmodule PlantMonitor.OAuth do
   @type refresh_access_token_response :: token_response | {:error, :authorization_fail}
   @spec refresh_access_token(access_token :: String.t(), refresh_token :: String.t()) :: refresh_access_token_response
   def refresh_access_token(access_token, refresh_token) do
-    with {:ok, %{user_id: user_id, permissions: permissions} = details} <- token_details(access_token),
-         %RefreshToken{} = token <- RefreshTokenService.fetch_token(details, refresh_token),
+    with {:ok, %{user_id: user_id, secret_code: secret_code, permissions: permissions} = details} <- token_details(access_token),
+         %RefreshToken{} = token <- RefreshTokenService.fetch_token(%{user_id: user_id, secret_code: secret_code}, refresh_token),
          {:ok, %{secret_code: secret, refresh_token: refresh}} <- RefreshTokenService.refresh_token(token),
          {:ok, jwt_token_map} <- generate_token(%{user_id: user_id, permissions: permissions, secret_code: secret, refresh_token: refresh})
     do
@@ -118,7 +118,7 @@ defmodule PlantMonitor.OAuth do
         permissions: list(String.t())
       }}
   """
-  @type verify_token_response :: token_details_map | :error
+  @type verify_token_response :: {:ok, token_details_map} | :error
   @spec verify_token(token :: String.t()) :: verify_token_response
   def verify_token(token) do
     with {:ok, details} <- token_details(token),
@@ -144,8 +144,8 @@ defmodule PlantMonitor.OAuth do
         permissions: list(String.t())
       }}
   """
-  @type token_details_map :: {:ok, %{user_id: :uuid, expire_at_unix: integer(), secret_code: String.t(), permissions: list()}}
-  @type token_details_response :: token_details_map | :error
+  @type token_details_map :: %{user_id: :uuid, expire_at_unix: integer(), secret_code: String.t(), permissions: list()}
+  @type token_details_response :: {:ok, token_details_map} | :error
   @spec token_details(token :: String.t()) :: token_details_response
   def token_details(token) do
     with claims = fetch_token_claims(token),
@@ -159,7 +159,7 @@ defmodule PlantMonitor.OAuth do
     end
   end
 
-  @spec details_as_map(claims :: map()) :: map()
+  @spec details_as_map(claims :: map()) :: token_details_map
   defp details_as_map(claims) do
     %{
       user_id: claims["sub"],
@@ -190,7 +190,7 @@ defmodule PlantMonitor.OAuth do
   defp check_issuer(%{"iss" => "plant_monitor"}), do: :ok
   defp check_issuer(_claims), do: :error
 
-  @spec check_expiration_time(%{expire_at_unix: integer()}) :: check_response
+  @spec check_expiration_time(token_details_map) :: check_response
   defp check_expiration_time(%{expire_at_unix: expiration_time}) do
     case expiration_time > Joken.current_time() do
       true -> :ok
