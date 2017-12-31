@@ -50,6 +50,9 @@ defmodule PlantMonitorWeb.Mixfile do
       # CORS
       {:cors_plug, "~> 1.5"},
 
+      # Permissions check
+      {:conductor, "~> 0.3.0"},
+
     ]
   end
 

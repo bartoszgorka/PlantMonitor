@@ -132,4 +132,17 @@ defmodule PlantMonitorWeb.ErrorViewTest do
     assert expected == result
   end
 
+  # UNAUTHORIZED JSON
+
+  test "[ERROR VIEW][UNAUTHORIZED.JSON] Unauthorized request" do
+    expected = %ErrorResponse{
+      status: 403,
+      message: "Action Forbidden! You must authorize request.",
+      fields: []
+    }
+
+    result = render(ErrorView, "unauthorized.json", %{})
+    assert expected == result
+  end
+
 end

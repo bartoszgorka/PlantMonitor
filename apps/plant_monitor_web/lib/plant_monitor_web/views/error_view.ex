@@ -86,6 +86,16 @@ defmodule PlantMonitorWeb.ErrorView do
     }
   end
 
+  # CONDUCTOR - UNAUTHORIZED REQUEST
+
+  def render("unauthorized.json", _params) do
+    %ErrorResponse{
+      status: 403,
+      message: @error_403_message,
+      fields: []
+    }
+  end
+
   @doc """
   In case no render clause matches or no template is found, let's render it as 500.
   """
