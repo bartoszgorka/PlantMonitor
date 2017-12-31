@@ -32,4 +32,13 @@ defmodule PlantMonitorWeb.ErrorRequest do
     |> render(ErrorView, "error.json", %{status: status})
   end
 
+  @doc """
+  Send invalid Ecto.Changeset to render errors.
+  """
+  def invalid_request(conn, %Ecto.Changeset{} = changeset) do
+    conn
+    |> put_status(422)
+    |> render(ErrorView, "error.json", changeset)
+  end
+
 end

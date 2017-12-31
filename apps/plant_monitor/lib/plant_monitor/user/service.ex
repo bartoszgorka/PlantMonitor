@@ -43,8 +43,7 @@ defmodule PlantMonitor.UserService do
       {:error, Ecto.Changeset} -> error in register new User
   """
   @type register_response :: :ok | {:error, %Ecto.Changeset{}}
-  @type reg_params :: %{profile: map()}
-  @spec register(params :: reg_params) :: register_response
+  @spec register(params :: map()) :: register_response
   def register(%{profile: profile} = params) do
     Multi.new()
     |> Multi.insert(:user, User.changeset(%User{}, params))
