@@ -10,7 +10,7 @@ defmodule PlantMonitor.UserFactory do
         password = sequence("Password")
         %PlantMonitor.User{
           email: sequence(:email, &"john.example#{&1}@example.com"),
-          password: Comeonin.Bcrypt.hashpwsalt(password)
+          encrypted_password: Comeonin.Bcrypt.hashpwsalt(password)
         }
       end
     end

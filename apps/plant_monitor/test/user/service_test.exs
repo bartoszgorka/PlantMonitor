@@ -53,4 +53,38 @@ defmodule PlantMonitor.UserServiceTest do
     refute result
   end
 
+  # LOGIN
+
+  test "[LOGIN] Correct credentials" do
+    parameters = %{
+      email: "john@example.com",
+      password: "Password"
+    }
+    :ok = UserService.register(parameters)
+
+    result = UserService.login(parameters)
+    assert {:ok, _token} = result
+  end
+
+  test "[LOGIN] No found email (user)" do
+    parameters = %{
+      email: "john@example.com",
+      password: "Password"
+    }
+
+    result = UserService.login(parameters)
+    assert {:error, :invalid_credentials} == result
+  end
+
+  test "[LOGIN] Invalid credentials" do
+    user = insert(:user)
+    parameters = %{
+      email: user.email,
+      password: "IdontKnowPassword"
+    }
+
+    result = UserService.login(parameters)
+    assert {:error, :invalid_credentials} == result
+  end
+
 end
