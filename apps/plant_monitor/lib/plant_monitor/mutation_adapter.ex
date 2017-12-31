@@ -15,6 +15,7 @@ defmodule PlantMonitor.MutationAdapter do
       {:error, atom}
   """
   def prevent({:ok, _struct}), do: :ok
+  def prevent({:error, _field, %Ecto.Changeset{} = changeset, _changes}), do: {:error, changeset}
   def prevent({:error, %Ecto.Changeset{}} = error), do: error
   def prevent({:error, atom}) when is_atom(atom), do: {:error, atom}
 

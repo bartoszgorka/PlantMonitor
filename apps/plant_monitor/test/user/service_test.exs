@@ -7,8 +7,12 @@ defmodule PlantMonitor.UserServiceTest do
 
   test "[VALID][REGISTER] Register new user" do
     parameters = %{
-      email: "john@example.com",
-      password: "Password"
+      email: "Make@example.com",
+      password: "Software",
+      profile: %{
+        first_name: "Great",
+        last_name: "Again"
+      }
     }
 
     result = UserService.register(parameters)
@@ -20,7 +24,11 @@ defmodule PlantMonitor.UserServiceTest do
     user = insert(:user)
     parameters = %{
       email: user.email,
-      password: "Password"
+      password: "Software",
+      profile: %{
+        first_name: "Great",
+        last_name: "Again"
+      }
     }
 
     result = UserService.register(parameters)
@@ -31,11 +39,28 @@ defmodule PlantMonitor.UserServiceTest do
   test "[INVALID][REGISTER] Invalid password" do
     parameters = %{
       email: "john@example.com",
-      password: "2SH"
+      password: "2SH",
+      profile: %{
+        first_name: "Great",
+        last_name: "Again"
+      }
     }
 
     result = UserService.register(parameters)
 
+    assert {:error, %Ecto.Changeset{}} = result
+  end
+
+  test "[INVALID][REGISTER] Invalid profile parameters" do
+    parameters = %{
+      email: "Make@example.com",
+      password: "Software",
+      profile: %{
+        last_name: "Where great? - Again"
+      }
+    }
+
+    result = UserService.register(parameters)
     assert {:error, %Ecto.Changeset{}} = result
   end
 

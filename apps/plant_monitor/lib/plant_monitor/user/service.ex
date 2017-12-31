@@ -5,6 +5,7 @@ defmodule PlantMonitor.UserService do
   alias PlantMonitor.MutationAdapter
   alias PlantMonitor.User
   alias PlantMonitor.Repo
+  alias Ecto.Multi
   import Ecto.Query
 
   @doc """
@@ -26,23 +27,34 @@ defmodule PlantMonitor.UserService do
   end
 
   @doc """
-  Register new `PlantMonitor.User`.
+  Register new `PlantMonitor.User` (with required profile)
 
   ## Parameters
       %{
         email :: String.t()
         password :: String.t()
+        profile: %{
+          first_name :: String.t(),
+          last_name :: String.t()
+        }
       }
   ## Returns
-      :ok -> register user
+      :ok -> register user with profile
       {:error, Ecto.Changeset} -> error in register new User
   """
   @type register_response :: :ok | {:error, %Ecto.Changeset{}}
-  @spec register(parameters :: map()) :: register_response
-  def register(parameters) do
-    %User{}
-    |> User.changeset(parameters)
-    |> Repo.insert()
+  @type reg_params :: %{profile: map()}
+  @spec register(params :: reg_params) :: register_response
+  def register(%{profile: profile} = params) do
+    Multi.new()
+    |> Multi.insert(:user, User.changeset(%User{}, params))
+    |> Multi.run(:profile, fn %{user: user} ->
+      profile
+      |> Map.merge(%{user_id: user.id})
+      |> PlantMonitor.ProfileService.prepare_register_changeset()
+      |> Repo.insert()
+    end)
+    |> Repo.transaction()
     |> MutationAdapter.prevent()
   end
 

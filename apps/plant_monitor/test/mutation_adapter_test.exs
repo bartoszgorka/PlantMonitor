@@ -11,6 +11,14 @@ defmodule PlantMonitor.MutationAdapterTest do
     assert :ok == result
   end
 
+  test "[PREVENT] Error with Ecto.Changeset from transaction" do
+    check = {:error, :user, %Ecto.Changeset{}, %{}}
+    expected = {:error, %Ecto.Changeset{}}
+
+    result = MutationAdapter.prevent(check)
+    assert expected == result
+  end
+
   test "[PREVENT] Error with Ecto.Changeset result" do
     check = {:error, %Ecto.Changeset{}}
     result = MutationAdapter.prevent(check)
