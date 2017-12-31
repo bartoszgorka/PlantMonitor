@@ -3,7 +3,10 @@
     "lib/plant_monitor_web.ex",
     "lib/plant_monitor_web/application.ex",
     "lib/plant_monitor_web/endpoint.ex",
-    "test/support/channel_case.ex",
+    "test/support/",
     "lib/plant_monitor_web/views/error_helpers.ex"
-  ]
+  ],
+  "custom_stop_words": [
+    "def init\(opts\), do: opts",
+  ],
 }
