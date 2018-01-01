@@ -3,8 +3,12 @@ defmodule PlantMonitorWeb.API.DeviceControllerTest do
 
   # CREATE
 
-  defp build_authorized_conn(permissions) do
-    user = insert(:user, %{permissions: permissions})
+  defp build_authorized_conn(options) do
+    user =
+      case Map.has_key?(options, :user) do
+        true -> options.user
+        false -> insert(:user, %{permissions: options.permissions})
+      end
     {:ok, %{access_token: access_token}} = PlantMonitor.OAuth.authorize(user)
 
     header = "Bearer " <> access_token
@@ -18,10 +22,10 @@ defmodule PlantMonitorWeb.API.DeviceControllerTest do
       name: "Make Software",
       place: "Great Again!"
     }
-    permissions = ["devices:create"]
 
+    options = %{permissions: ["devices:create"]}
     result =
-      permissions
+      options
       |> build_authorized_conn()
       |> post("/api/devices", parameters)
 
@@ -29,16 +33,17 @@ defmodule PlantMonitorWeb.API.DeviceControllerTest do
   end
 
   test "[DEVICE_CONTROLLER][CREATE] Duplicated device name" do
-    device = insert(:device)
+    permissions = ["devices:create"]
+    user = insert(:user, %{permissions: permissions})
+    device = insert(:device, %{user_id: user.id})
     parameters = %{
       name: device.name,
       place: "Great Again!"
     }
 
-    permissions = ["devices:create"]
-
+    options = %{permissions: permissions, user: user}
     result =
-      permissions
+      options
       |> build_authorized_conn()
       |> post("/api/devices", parameters)
 
@@ -49,10 +54,10 @@ defmodule PlantMonitorWeb.API.DeviceControllerTest do
     parameters = %{
       place: "Great Again!"
     }
-    permissions = ["devices:create"]
+    options = %{permissions: ["devices:create"]}
 
     result =
-      permissions
+      options
       |> build_authorized_conn()
       |> post("/api/devices", parameters)
 
@@ -64,10 +69,9 @@ defmodule PlantMonitorWeb.API.DeviceControllerTest do
       name: "Make Software",
       place: "Great Again!"
     }
-    permissions = []
-
+    options = %{permissions: []}
     result =
-      permissions
+      options
       |> build_authorized_conn()
       |> post("/api/devices", parameters)
 

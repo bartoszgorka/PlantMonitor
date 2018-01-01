@@ -15,7 +15,7 @@ defmodule PlantMonitorWeb.API.DeviceController do
       "name" :: String.t()
       "place" :: String.t()
   """
-  @authorize scopes: "devices:create"
+  @authorize scope: "devices:create"
   def create(%{assigns: %{user_id: user_id}} = conn, %{"name" => name, "place" => place}) do
     device_details = %{
       user_id: user_id,
