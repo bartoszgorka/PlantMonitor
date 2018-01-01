@@ -19,6 +19,11 @@ defmodule PlantMonitorWeb.Router do
     plug PlantMonitorWeb.Plugs.AssignAccessToken
   end
 
+  pipeline :api_authorize do
+    plug PlantMonitorWeb.Plugs.ValidateAccessToken
+    plug PlantMonitorWeb.Plugs.SplitTokenClaims
+  end
+
   scope "/", PlantMonitorWeb do
     pipe_through :browser
 
