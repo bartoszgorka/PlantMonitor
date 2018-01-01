@@ -29,6 +29,7 @@ defmodule PlantMonitorUmbrella.Mixfile do
       "credo": ["credo --strict"],
       "coveralls": ["coveralls --umbrella"],
       "coveralls.detail": ["coveralls.detail --umbrella"],
+      "check": ["do credo, test --listen-on-stdin --stale"],
     ]
   end
 
