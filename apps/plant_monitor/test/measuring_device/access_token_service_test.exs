@@ -16,4 +16,14 @@ defmodule PlantMonitor.Device.AccessTokenServiceTest do
     refute result
   end
 
+  # CREATE TOKEN
+
+  test "[CREATE_TOKEN] Generate access token for our device" do
+    device = insert(:device)
+    result = AccessTokenService.create_token(device.id)
+
+    assert {:ok, token} = result
+    assert String.length(token) == 35
+  end
+
 end

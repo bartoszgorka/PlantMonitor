@@ -1,13 +1,13 @@
-defmodule PlantMonitorWeb.API.UserView do
+defmodule PlantMonitorWeb.API.DeviceView do
   @moduledoc """
-  User view render.
+  Device view render.
   """
   use PlantMonitorWeb, :view
   alias PlantMonitorWeb.Structs.ConfirmResponse
 
   def render("correct_register.json", _assigns) do
     %ConfirmResponse{
-      message: "Correct registed in PlantMonitor API. Now you can login and use our API."
+      message: "We prepare your device correctly."
     }
   end
 
