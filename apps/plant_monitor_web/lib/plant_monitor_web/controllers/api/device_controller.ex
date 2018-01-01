@@ -4,8 +4,21 @@ defmodule PlantMonitorWeb.API.DeviceController do
   """
   use Conductor
   use PlantMonitorWeb, :controller
+  alias PlantMonitor.DeviceService
   alias PlantMonitorWeb.ErrorRequest
   alias PlantMonitorWeb.API.DeviceView
+
+  @doc """
+  Prepare list with created measuring devices.
+  Authorized - "devices:listing"
+  """
+  @authorize scope: "devices:listing"
+  def index(%{assigns: %{user_id: user_id}} = conn, parameters) do
+    results = DeviceService.get_devices(user_id, parameters)
+
+    conn
+    |> render(DeviceView, "devices_list.json", results)
+  end
 
   @doc """
   Register new measuring device.
@@ -23,7 +36,7 @@ defmodule PlantMonitorWeb.API.DeviceController do
       place: place
     }
 
-    case PlantMonitor.DeviceService.register(device_details) do
+    case DeviceService.register(device_details) do
       :ok ->
         conn
         |> put_status(201)

@@ -78,4 +78,34 @@ defmodule PlantMonitorWeb.API.DeviceControllerTest do
     assert result.status == 403
   end
 
+  # INDEX
+
+  test "[DEVICE_CONTROLLER][INDEX] Fetch listing registered devices" do
+    user = insert(:user, %{permissions: ["devices:listing"]})
+    _devices = insert_list(6, :device, %{user_id: user.id})
+
+    options = %{user: user}
+    result =
+      options
+      |> build_authorized_conn()
+      |> get("/api/devices", %{})
+
+    assert result.status == 200
+    assert length(json_response(result, 200)["devices"]) == 6
+  end
+
+  test "[DEVICE_CONTROLLER][INDEX] Custom limit in fetch listing registered devices" do
+    user = insert(:user, %{permissions: ["devices:listing"]})
+    _devices = insert_list(3, :device, %{user_id: user.id})
+
+    options = %{user: user}
+    result =
+      options
+      |> build_authorized_conn()
+      |> get("/api/devices", %{limit: 2})
+
+    assert result.status == 200
+    assert length(json_response(result, 200)["devices"]) == 2
+  end
+
 end
