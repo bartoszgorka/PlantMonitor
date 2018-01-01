@@ -24,6 +24,10 @@ defmodule PlantMonitorWeb.Router do
     plug PlantMonitorWeb.Plugs.SplitTokenClaims
   end
 
+  pipeline :api_sensor_authorize do
+    plug PlantMonitorWeb.Plugs.ValidateSensorRequest
+  end
+
   scope "/", PlantMonitorWeb do
     pipe_through :browser
 
