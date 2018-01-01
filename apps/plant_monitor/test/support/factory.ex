@@ -10,4 +10,7 @@ defmodule PlantMonitor.Factory do
   use PlantMonitor.OAuth.AccessTokenFactory
   use PlantMonitor.OAuth.RefreshTokenFactory
 
+  # Measuring device
+  use PlantMonitor.DeviceFactory
+
 end
