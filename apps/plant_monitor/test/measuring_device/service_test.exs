@@ -42,4 +42,18 @@ defmodule PlantMonitor.DeviceServiceTest do
     assert {:error, %Ecto.Changeset{}} = result
   end
 
+  # FETCH DEVICE
+
+  test "[FETCH_DEVICE] Device found" do
+    device = insert(:device)
+    result = DeviceService.fetch_device(device.id)
+    assert device == result
+  end
+
+  test "[FETCH_DEVICE] No device found" do
+    device_id = Ecto.UUID.generate()
+    result = DeviceService.fetch_device(device_id)
+    refute result
+  end
+
 end

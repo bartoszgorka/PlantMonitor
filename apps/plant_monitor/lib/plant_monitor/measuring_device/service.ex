@@ -29,4 +29,20 @@ defmodule PlantMonitor.DeviceService do
     |> MutationAdapter.prevent()
   end
 
+  @doc """
+  Fetch `PlantMonitor.Device` by Device ID.
+
+  ## Parameters
+      device_id :: :uuid
+
+  ## Returns
+      nil -> no device found
+      PlantMonitor.Device -> on success
+  """
+  @type fetch_device_response :: %PlantMonitor.Device{} | nil
+  @spec fetch_device(device_id :: :uuid) :: fetch_device_response
+  def fetch_device(device_id) do
+    Repo.get(Device, device_id)
+  end
+
 end
