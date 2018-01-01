@@ -41,7 +41,7 @@ defmodule PlantMonitorWeb.API.DeviceControllerTest do
       place: "Great Again!"
     }
 
-    options = %{permissions: permissions, user: user}
+    options = %{user: user}
     result =
       options
       |> build_authorized_conn()
