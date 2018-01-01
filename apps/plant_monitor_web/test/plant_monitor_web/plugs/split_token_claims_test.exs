@@ -18,7 +18,7 @@ defmodule PlantMonitorWeb.Plugs.SplitTokenClaimsTest do
       conn
       |> SplitTokenClaims.call()
 
-    assert params.permissions == result.assigns[:permissions]
+    assert params.permissions == result.assigns[:scopes]
     assert params.user_id == result.assigns[:user_id]
   end
 

@@ -7,7 +7,7 @@ defmodule PlantMonitorWeb.Plugs.SplitTokenClaims do
   def call(conn, _params \\ %{}) do
     conn
     |> assign_user_id()
-    |> assign_permissions()
+    |> assign_scopes()
   end
 
   defp assign_user_id(conn) do
@@ -17,11 +17,11 @@ defmodule PlantMonitorWeb.Plugs.SplitTokenClaims do
     |> assign(:user_id, user_id)
   end
 
-  defp assign_permissions(conn) do
-    permissions = conn.assigns.claims.permissions
+  defp assign_scopes(conn) do
+    scopes = conn.assigns.claims.permissions
 
     conn
-    |> assign(:permissions, permissions)
+    |> assign(:scopes, scopes)
   end
 
 end
