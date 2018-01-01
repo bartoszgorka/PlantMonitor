@@ -19,7 +19,7 @@ defmodule PlantMonitorUmbrella.Mixfile do
   defp deps do
     [
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 0.5", only: :dev, runtime: false},
+      {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.7", only: [:dev, :test], runtime: false},
     ]
   end
@@ -29,7 +29,8 @@ defmodule PlantMonitorUmbrella.Mixfile do
       "credo": ["credo --strict"],
       "coveralls": ["coveralls --umbrella"],
       "coveralls.detail": ["coveralls.detail --umbrella"],
-      "check": ["do credo, test --listen-on-stdin --stale"],
+      "full_check": ["credo", "dialyzer", "test --listen-on-stdin --stale"],
+      "check": ["credo", "test --listen-on-stdin --stale"],
     ]
   end
 
