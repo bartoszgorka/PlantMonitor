@@ -43,4 +43,10 @@ defmodule PlantMonitorWeb.Router do
     post "/login", SessionController, :login
   end
 
+  scope "/api", PlantMonitorWeb.API do
+    pipe_through [:api, :api_authorize]
+
+    post "/devices", DeviceController, :create
+  end
+
 end
