@@ -20,8 +20,8 @@ defmodule PlantMonitor.OAuth.RefreshTokenService do
   @spec generate_new_token(user_id :: :uuid) :: generate_new_token_response
   def generate_new_token(user_id) do
     parameters = %{
-      secret_code: random_key(),
-      refresh_token: random_key()
+      secret_code: PlantMonitor.Random.random_key(),
+      refresh_token: PlantMonitor.Random.random_key()
     }
 
     %RefreshToken{user_id: user_id}
@@ -31,12 +31,6 @@ defmodule PlantMonitor.OAuth.RefreshTokenService do
       {:ok, token} -> {:ok, token}
       {:error, %Ecto.Changeset{}} -> generate_new_token(user_id)
     end
-  end
-
-  defp random_key(n \\ 20) do
-    :crypto.strong_rand_bytes(n)
-    |> Base.encode64(case: :lower, padding: true)
-    |> String.slice(0, n)
   end
 
   @doc """
