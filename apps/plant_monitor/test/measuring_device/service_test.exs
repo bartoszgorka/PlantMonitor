@@ -86,4 +86,31 @@ defmodule PlantMonitor.DeviceServiceTest do
     assert Enum.empty?(devices_list)
   end
 
+  # DELETE DEVICE
+
+  test "[DELETE_DEVICE] Correct delete device" do
+    %{id: user_id} = insert(:user)
+    device = insert(:device, %{user_id: user_id})
+
+    result = DeviceService.delete_device(%{user_id: user_id, device_id: device.id})
+    assert :ok == result
+  end
+
+  test "[DELETE_DEVICE] Try delete device prepared by another user" do
+    %{id: user_id} = insert(:user)
+    %{id: first_id} = insert(:user)
+    device = insert(:device, %{user_id: first_id})
+
+    result = DeviceService.delete_device(%{user_id: user_id, device_id: device.id})
+    assert :error == result
+  end
+
+  test "[DELETE_DEVICE] Invalid Device ID - not UUID" do
+    %{id: user_id} = insert(:user)
+    device_id = "Not UUID ID"
+
+    result = DeviceService.delete_device(%{user_id: user_id, device_id: device_id})
+    assert :error == result
+  end
+
 end

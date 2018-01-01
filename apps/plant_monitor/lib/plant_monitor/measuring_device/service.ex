@@ -56,7 +56,7 @@ defmodule PlantMonitor.DeviceService do
 
   ## Returns
       %{
-        paginate: %{
+        pagination: %{
           page: integer(),
           limit: integer()
         },
@@ -64,9 +64,9 @@ defmodule PlantMonitor.DeviceService do
       }
   """
   @type get_devices_response :: %{
-    paginate: %{
-      page: integer(),
-      limit: integer()
+    pagination: %{
+      page: number(),
+      limit: number()
     },
     results: list(%PlantMonitor.Device{})
   }
@@ -75,6 +75,40 @@ defmodule PlantMonitor.DeviceService do
     Device
     |> where([d], d.user_id == ^user_id)
     |> Repo.paginate(repo_parameters)
+  end
+
+  @doc """
+  Delete device registered by user.
+
+  ## Parameters
+      %{
+        user_id :: :uuid,
+        device_id :: :uuid
+      }
+
+  ## Returns
+      :ok -> success
+      :error -> invalid request
+  """
+  @type delete_device_response :: :ok | :error
+  @spec delete_device(%{user_id: :uuid, device_id: :uuid}) :: delete_device_response
+  def delete_device(%{user_id: user_id, device_id: device_id}) do
+    case Ecto.UUID.cast(device_id) do
+      :error -> :error
+      {:ok, _device_id} -> delete(user_id, device_id)
+    end
+  end
+
+  @spec delete(user_id :: :uuid, device_id :: :uuid) :: delete_device_response
+  defp delete(user_id, device_id) do
+    Device
+    |> where([d], d.id == ^device_id)
+    |> where([d], d.user_id == ^user_id)
+    |> Repo.delete_all()
+    |> case do
+      {1, _result} -> :ok
+      _result -> :error
+    end
   end
 
 end
