@@ -53,4 +53,10 @@ defmodule PlantMonitorWeb.Router do
     resources "/devices", DeviceController
   end
 
+  scope "/api", PlantMonitorWeb.API do
+    pipe_through [:api, :api_sensor_authorize]
+
+    resources "/measurement_data", DataController
+  end
+
 end
