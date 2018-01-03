@@ -46,6 +46,7 @@ defmodule PlantMonitorWeb.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
+      {:ecto, "~> 2.2.6"},
 
       # CORS
       {:cors_plug, "~> 1.5"},
@@ -56,6 +57,9 @@ defmodule PlantMonitorWeb.Mixfile do
       # Sentry
       {:sentry, "~> 6.0.4"},
 
+      # API docs
+      {:phoenix_swagger, "~> 0.7"},
+
     ]
   end
 
@@ -63,11 +67,12 @@ defmodule PlantMonitorWeb.Mixfile do
   defp aliases do
     [
       "test": ["ecto.create --quiet", "ecto.migrate", "test"],
+      "swagger": ["phx.swagger.generate priv/static/api_docs.json -r PlantMonitorWeb.Router -e PlantMonitorWeb.Endpoint"],
     ]
   end
 
   # Dynamic version
-  defp version do
+  def version do
     File.read!("../../VERSION")
   end
 

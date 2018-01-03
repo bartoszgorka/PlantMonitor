@@ -59,4 +59,16 @@ defmodule PlantMonitorWeb.Router do
     resources "/measurement_data", DataController
   end
 
+  scope "/api" do
+    forward "/", PhoenixSwagger.Plug.SwaggerUI, otp_app: :plant_monitor_web, swagger_file: "api_docs.json", disable_validator: true
+  end
+
+  def swagger_info do %{
+      info: %{
+        version: PlantMonitorWeb.Mixfile.version(),
+        title: "PlantMonitor API"
+      }
+    }
+  end
+
 end
