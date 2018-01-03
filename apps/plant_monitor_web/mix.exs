@@ -53,6 +53,9 @@ defmodule PlantMonitorWeb.Mixfile do
       # Permissions check
       {:conductor, "~> 0.3.0"},
 
+      # Sentry
+      {:sentry, "~> 6.0.4"},
+
     ]
   end
 
