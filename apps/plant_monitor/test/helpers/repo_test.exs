@@ -38,4 +38,23 @@ defmodule PlantMonitor.RepoTest do
     assert %{results: response, pagination: %{page: 2, limit: 2}} = response
     assert response |> length == 2
   end
+
+  test "[PAGINATE] pagination Try cast invalid number" do
+    parameters = %{
+      "page" => "pageNo1",
+      "limit" => "LimitPerPage"
+    }
+    response = Repo.paginate(User, parameters)
+    assert %{results: [], pagination: %{page: 0, limit: 10}} == response
+  end
+
+  test "[PAGINATE] pagination Not possitive numbers" do
+    parameters = %{
+      "page" => "-20",
+      "limit" => 0
+    }
+    response = Repo.paginate(User, parameters)
+    assert %{results: [], pagination: %{page: 0, limit: 10}} == response
+  end
+
 end

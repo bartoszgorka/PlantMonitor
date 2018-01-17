@@ -42,7 +42,7 @@ defmodule PlantMonitor.OAuth do
   @type refresh_access_token_response :: token_response | {:error, :authorization_fail}
   @spec refresh_access_token(access_token :: String.t(), refresh_token :: String.t()) :: refresh_access_token_response
   def refresh_access_token(access_token, refresh_token) do
-    with {:ok, %{user_id: user_id, secret_code: secret_code, permissions: permissions} = details} <- token_details(access_token),
+    with {:ok, %{user_id: user_id, secret_code: secret_code, permissions: permissions}} <- token_details(access_token),
          %RefreshToken{} = token <- RefreshTokenService.fetch_token(%{user_id: user_id, secret_code: secret_code}, refresh_token),
          {:ok, %{secret_code: secret, refresh_token: refresh}} <- RefreshTokenService.refresh_token(token),
          {:ok, jwt_token_map} <- generate_token(%{user_id: user_id, permissions: permissions, secret_code: secret, refresh_token: refresh})
