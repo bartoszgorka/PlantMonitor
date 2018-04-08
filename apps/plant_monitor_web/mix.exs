@@ -11,7 +11,7 @@ defmodule PlantMonitorWeb.Mixfile do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.5",
+      elixir: "~> 1.6",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
@@ -51,16 +51,16 @@ defmodule PlantMonitorWeb.Mixfile do
       {:plant_monitor, in_umbrella: true},
 
       # CORS
-      {:cors_plug, "~> 1.5"},
+      {:cors_plug, "~> 1.5.0"},
 
       # Permissions check
       {:conductor, "~> 0.3.0"},
 
       # Sentry
-      {:sentry, "~> 6.0.4"},
+      {:sentry, "~> 6.2.0"},
 
       # API docs
-      {:phoenix_swagger, "~> 0.7"},
+      {:phoenix_swagger, "~> 0.8.0"},
 
     ]
   end

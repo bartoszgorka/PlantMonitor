@@ -11,7 +11,7 @@ defmodule PlantMonitor.Mixfile do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.5",
+      elixir: "~> 1.6",
       elixirc_paths: elixirc_paths(Mix.env),
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
@@ -44,7 +44,7 @@ defmodule PlantMonitor.Mixfile do
       {:ecto, "~> 2.2.6"},
 
       # Encrypt password
-      {:comeonin, "~> 4.0"},
+      {:comeonin, "~> 4.1"},
       {:bcrypt_elixir, "~> 1.0"},
 
       # Tests
